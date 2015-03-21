@@ -2,3 +2,4 @@
 *.dat
 doc.txt
 r8-train-stemmed.txt
+r8*.txt
