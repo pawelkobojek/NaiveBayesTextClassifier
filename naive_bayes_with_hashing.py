@@ -2,9 +2,9 @@
 
 from sys import argv, exit
 from hashlib import sha512
-from operator import itemgetter
+from math import log
 
-NUMBER_OF_FEATURES = 16
+NUMBER_OF_FEATURES = 2048
 
 def hash(word):
     return int.from_bytes(sha512(word.encode('ascii')).digest(), 'little') % NUMBER_OF_FEATURES
@@ -62,7 +62,9 @@ def learn(dataset, save):
                 for d in vectors[c]:
                     if d[f] == v + 1:
                         count += 1
-                p_di_vjk[c][f].append(count / no_sets / p_di[c]) # TODO: len(vector[c]) zamiast no_sets?
+                x = (count / no_sets)# / p_di[c]
+                x = None if x == 0 else log(x)
+                p_di_vjk[c][f].append(x) # TODO: len(vector[c]) zamiast no_sets?
 
     print('OK!')
 
@@ -71,10 +73,10 @@ def learn(dataset, save):
         for v in vectors[c]:
             p = {}
             for d in vectors:
-                p[d] = p_di[d]
+                p[d] = log(p_di[d])
                 for i in range(NUMBER_OF_FEATURES):
-                    if v[i] < max_feat[i] and p_di_vjk[d][i][v[i]] > 0.0:
-                        p[d] *= p_di_vjk[d][i][v[i]]
+                    if v[i] < max_feat[i] and p_di_vjk[d][i][v[i]] != None:
+                        p[d] += p_di_vjk[d][i][v[i]]
             m = max(p, key=(lambda key: p[key]))
             if m != c:
                 errors += 1
