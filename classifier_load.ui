@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoadDatabaseWindow</class>
+ <widget class="QMainWindow" name="LoadDatabaseWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>459</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Naive Bayes Text Classifier</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="lineEdit_databaseFilename">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>311</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_loadDatabase">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>111</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load Database</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_browseDatabase">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>40</y>
+      <width>101</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Browse...</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_loadDatabase">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>421</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load</string>
+    </property>
+   </widget>
+   <zorder>label_loadDatabase</zorder>
+   <zorder>pushButton_loadDatabase</zorder>
+   <zorder>pushButton_browseDatabase</zorder>
+   <zorder>lineEdit_databaseFilename</zorder>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>pushButton_browseDatabase</tabstop>
+  <tabstop>pushButton_loadDatabase</tabstop>
+  <tabstop>lineEdit_databaseFilename</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
