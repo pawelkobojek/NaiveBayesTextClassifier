@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import json
+import math
+import decimal
+
 
 def read_dataset(dataset_file):
     with open(dataset_file) as f:
@@ -63,6 +66,49 @@ def learn_naive_bayes(gui_object, dataset_file):
         'vocabulary': vocabulary
     }
 
+
+def nb_classify_max(doc, prob_of_classes, probs_of_word_given_classes, vocabulary):
+    pred = nb_classify(doc, prob_of_classes, probs_of_word_given_classes, vocabulary)
+
+    max_value = max(pred.values())
+    return [key for key, value in pred.items() if value == max_value][0]
+
+
+def nb_classify_all(doc, prob_of_classes, probs_of_word_given_classes, vocabulary):
+    pred = nb_classify(doc, prob_of_classes, probs_of_word_given_classes, vocabulary)
+
+    s = decimal.Decimal(0)
+
+    for c in pred.keys():
+        pred[c] = (decimal.Decimal(math.e) ** decimal.Decimal(pred[c]))
+        s += pred[c]
+
+    for c in pred.keys():
+        pred[c] = (pred[c] / s) * 100
+
+    return pred
+
+
+def nb_classify(doc, prob_of_classes, probs_of_word_given_classes, vocabulary):
+    pred = {}
+    for c in prob_of_classes.keys():
+        pred[c] = math.log(prob_of_classes[c])
+        for word in doc.split():
+            if word in vocabulary:
+                pred[c] += math.log(probs_of_word_given_classes[c][word])
+
+    return pred
+
+
 def serialize_to_file(obj, file_name):
     with open(file_name, 'w') as f:
         json.dump(obj, f)
+
+
+def read_from_file(file_name):
+    with open(file_name, 'r') as f:
+        return json.load(f)
+
+
+def get_data_from_db(database):
+    return database['prob_of_classes'], database['probs_of_word_given_classes'], database['vocabulary']
