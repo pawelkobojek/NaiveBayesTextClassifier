@@ -3,6 +3,7 @@
 import json
 import math
 import decimal
+import datetime
 
 
 def read_dataset(dataset_file):
@@ -34,6 +35,8 @@ def learn_naive_bayes(gui_object, dataset_file):
     total_examples_count = len(dataset)
 
     gui_object.setNewStatus('Creating database...')
+    docs_per_class = {}
+    words_count = 0
 
     j = 0
     for c in classes:
@@ -41,9 +44,11 @@ def learn_naive_bayes(gui_object, dataset_file):
 
         class_docs = [row[1] for row in dataset if row[0] == c]
         prob_of_classes[c] = len(class_docs) / total_examples_count
+        docs_per_class[c] = len(class_docs)
 
         # count all words in docs for given class
         total_words_in_class = sum([len(w.split()) for w in class_docs])
+        words_count += total_words_in_class
 
         if not c in probs_of_word_given_classes:
             probs_of_word_given_classes[c] = {}
@@ -60,7 +65,13 @@ def learn_naive_bayes(gui_object, dataset_file):
     gui_object.setNewStatus('')
 
     return {
+        'time_created': str(datetime.datetime.now()),
+        'created_from': dataset_file.split('/')[-1],
+        'total_examples': total_examples_count,
+        'total_words': words_count,
+        'unique_words': len(vocabulary),
         'classes': classes,
+        'docs_per_class': docs_per_class,
         'prob_of_classes': prob_of_classes,
         'probs_of_word_given_classes': probs_of_word_given_classes,
         'vocabulary': vocabulary

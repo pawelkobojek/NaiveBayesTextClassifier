@@ -38,7 +38,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return
 
         super(MainWindow, self).show()
+
         self.statusbar.showMessage('Database: %s' % filename)
+        self.label_created_from.setText(self.database['created_from'])
+        self.label_timeCreated.setText(self.database['time_created'])
+        self.label_avg.setText('%.02f' % (self.database['total_words'] / self.database['total_examples']))
+        self.label_totalArticles.setText(str(self.database['total_examples']))
+        self.label_totalClasses.setText(str(len(self.database['classes'])))
+        self.label_totalUnique.setText(str(self.database['unique_words']))
+        self.label_totalWords.setText(str(self.database['total_words']))
+
+        self.tableWidget_info.setRowCount(len(self.database['classes']))
+
+        for i, c in enumerate(self.database['classes']):
+            self.tableWidget_info.setItem(i, 0, QTableWidgetItem(c))
+            self.tableWidget_info.setItem(i, 1, QTableWidgetItem(str(self.database['docs_per_class'][c])))
+            self.tableWidget_info.setItem(i, 2, QTableWidgetItem('%.2f%%' % (self.database['prob_of_classes'][c] * 100)))
 
     def classify_single_clicked(self):
         text = self.plainTextEdit_classifySingle.toPlainText()
