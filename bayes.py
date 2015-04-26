@@ -123,3 +123,20 @@ def read_from_file(file_name):
 
 def get_data_from_db(database):
     return database['prob_of_classes'], database['probs_of_word_given_classes'], database['vocabulary']
+
+
+def compute_error(dataset, prob_of_classes, probs_of_word_given_classes, vocabulary, clbk):
+    error = 0
+    n = 0
+    l = len(dataset)
+
+    for i, row in enumerate(dataset):
+        v = int(i / l * 100)
+        if v > n:
+            n = v
+            clbk(n)
+
+        if not nb_classify_max(row[1], prob_of_classes, probs_of_word_given_classes, vocabulary) == row[0]:
+            error += 1
+
+    return error / len(dataset)
