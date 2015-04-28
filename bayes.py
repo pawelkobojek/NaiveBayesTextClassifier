@@ -3,7 +3,7 @@
 import json
 import math
 import decimal
-import datetime
+from datetime import datetime
 
 
 def read_dataset(dataset_file):
@@ -65,7 +65,7 @@ def learn_naive_bayes(gui_object, dataset_file):
     gui_object.setNewStatus('')
 
     return {
-        'time_created': str(datetime.datetime.now()),
+        'time_created': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         'created_from': dataset_file.split('/')[-1],
         'total_examples': total_examples_count,
         'total_words': words_count,
@@ -130,13 +130,33 @@ def compute_error(dataset, prob_of_classes, probs_of_word_given_classes, vocabul
     n = 0
     l = len(dataset)
 
+    results = {}
+    acc_all = {}
+    acc_err = {}
+
+    for c in prob_of_classes.keys():
+        results[c] = {
+            'accuracy': 0,
+            'no_errors': 0,
+            'p_errors': 0
+        }
+        acc_all[c] = 0
+        acc_err[c] = 0
+
     for i, row in enumerate(dataset):
         v = int(i / l * 100)
         if v > n:
             n = v
             clbk(n)
 
+        acc_all[row[0]] += 1
         if not nb_classify_max(row[1], prob_of_classes, probs_of_word_given_classes, vocabulary) == row[0]:
             error += 1
+            acc_err[row[0]] += 1
 
-    return error / len(dataset)
+    for c in prob_of_classes.keys():
+        results[c]['accuracy'] = 100 * (1 - acc_err[c] / acc_all[c])
+        results[c]['no_errors'] = acc_err[c]
+        results[c]['p_errors'] = 100 * (acc_err[c] / error)
+
+    return error / len(dataset), results

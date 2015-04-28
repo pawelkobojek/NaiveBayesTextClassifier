@@ -35,9 +35,9 @@ class DatasetTask(QThread):
             return
 
         pc, pw, vc = get_data_from_db(self.database)
-        error = compute_error(data, pc, pw, vc, self.status_callback)
+        error, result = compute_error(data, pc, pw, vc, self.status_callback)
 
-        self.calculation_finished.emit((1 - error) * 100, {})
+        self.calculation_finished.emit((1 - error) * 100, result)
 
     def status_callback(self, p):
         self.update_status.emit(p)
@@ -123,6 +123,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def on_dataset_calculation_finished(self, accuracy, results):
         self.label_totalAccuracy.setText('%.2f%%' % accuracy)
+        self.tableWidget_calculateSet.setRowCount(len(results))
+        for i, c in enumerate(results):
+            self.tableWidget_calculateSet.setItem(i, 0, QTableWidgetItem(c))
+            self.tableWidget_calculateSet.setItem(i, 1, QTableWidgetItem('%.2f%%' % results[c]['accuracy']))
+            self.tableWidget_calculateSet.setItem(i, 2, QTableWidgetItem(str(results[c]['no_errors'])))
+            self.tableWidget_calculateSet.setItem(i, 3, QTableWidgetItem('%.2f%%' % results[c]['p_errors']))
+
         self.set_dataset_calculation_mode(False)
 
     def on_dataset_invalid_file(self):

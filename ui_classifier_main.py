@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'classifier_main.ui'
 #
-# Created: Sun Apr 26 02:08:36 2015
+# Created: Tue Apr 28 16:15:52 2015
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -90,6 +90,7 @@ class Ui_MainWindow(object):
         self.tableWidget_info.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_info.setHorizontalHeaderItem(2, item)
+        self.tableWidget_info.horizontalHeader().setDefaultSectionSize(150)
         self.tableWidget_info.horizontalHeader().setStretchLastSection(True)
         self.tableWidget_info.verticalHeader().setVisible(False)
         self.gridLayout_6.addWidget(self.tableWidget_info, 0, 0, 1, 1)
@@ -103,22 +104,24 @@ class Ui_MainWindow(object):
         self.pushButton_loadDataset.setMinimumSize(QtCore.QSize(0, 40))
         self.pushButton_loadDataset.setObjectName("pushButton_loadDataset")
         self.gridLayout_5.addWidget(self.pushButton_loadDataset, 0, 1, 1, 1)
-        self.tableWidget = QtWidgets.QTableWidget(self.tab)
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(4)
-        self.tableWidget.setRowCount(0)
+        self.tableWidget_calculateSet = QtWidgets.QTableWidget(self.tab)
+        self.tableWidget_calculateSet.setObjectName("tableWidget_calculateSet")
+        self.tableWidget_calculateSet.setColumnCount(4)
+        self.tableWidget_calculateSet.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
+        self.tableWidget_calculateSet.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
+        self.tableWidget_calculateSet.setHorizontalHeaderItem(1, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, item)
+        self.tableWidget_calculateSet.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(3, item)
-        self.tableWidget.horizontalHeader().setCascadingSectionResizes(True)
-        self.tableWidget.horizontalHeader().setStretchLastSection(True)
-        self.tableWidget.verticalHeader().setVisible(False)
-        self.gridLayout_5.addWidget(self.tableWidget, 1, 1, 1, 1)
+        self.tableWidget_calculateSet.setHorizontalHeaderItem(3, item)
+        self.tableWidget_calculateSet.horizontalHeader().setCascadingSectionResizes(True)
+        self.tableWidget_calculateSet.horizontalHeader().setDefaultSectionSize(160)
+        self.tableWidget_calculateSet.horizontalHeader().setMinimumSectionSize(80)
+        self.tableWidget_calculateSet.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget_calculateSet.verticalHeader().setVisible(False)
+        self.gridLayout_5.addWidget(self.tableWidget_calculateSet, 1, 1, 1, 1)
         self.formLayout_2 = QtWidgets.QFormLayout()
         self.formLayout_2.setObjectName("formLayout_2")
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
@@ -192,6 +195,7 @@ class Ui_MainWindow(object):
         self.tableWidget_classifySingle.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_classifySingle.setHorizontalHeaderItem(1, item)
+        self.tableWidget_classifySingle.horizontalHeader().setDefaultSectionSize(150)
         self.tableWidget_classifySingle.horizontalHeader().setSortIndicatorShown(False)
         self.tableWidget_classifySingle.horizontalHeader().setStretchLastSection(True)
         self.tableWidget_classifySingle.verticalHeader().setVisible(False)
@@ -204,7 +208,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -234,13 +238,13 @@ class Ui_MainWindow(object):
         item.setText(_translate("MainWindow", "% items"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Database info"))
         self.pushButton_loadDataset.setText(_translate("MainWindow", "Load dataset..."))
-        item = self.tableWidget.horizontalHeaderItem(0)
+        item = self.tableWidget_calculateSet.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Class"))
-        item = self.tableWidget.horizontalHeaderItem(1)
+        item = self.tableWidget_calculateSet.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Accuracy"))
-        item = self.tableWidget.horizontalHeaderItem(2)
+        item = self.tableWidget_calculateSet.horizontalHeaderItem(2)
         item.setText(_translate("MainWindow", "Number of errors"))
-        item = self.tableWidget.horizontalHeaderItem(3)
+        item = self.tableWidget_calculateSet.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "% of errors"))
         self.label_4.setText(_translate("MainWindow", "Total Accuracy:"))
         self.label_totalAccuracy.setText(_translate("MainWindow", "Unknown"))
