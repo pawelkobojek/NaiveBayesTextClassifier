@@ -7,65 +7,55 @@ from sys import argv, exit
 from socket import gaierror
 from requests.exceptions import ConnectionError
 
-def create(n):
-    wikipedia.set_lang('en')
-    stemmer = PorterStemmer()
-    stops = stopwords.words('english')
-    text_list = []
+def create(stemmer, stops):
+    page_name = wikipedia.random()
 
-    for i in range(n):
-        page_name = wikipedia.random()
-
-        page = None
-        while True:
+    page = None
+    while True:
+        try:
             try:
+                page = wikipedia.page(page_name)
+            except wikipedia.DisambiguationError as e:
+                page_name = e.options[0]
                 try:
                     page = wikipedia.page(page_name)
-                except wikipedia.DisambiguationError as e:
-                    page_name = e.options[0]
-                    try:
-                        page = wikipedia.page(page_name)
-                    except wikipedia.DisambiguationError:
-                        continue
-                break
-            except (wikipedia.PageError, KeyboardInterrupt, gaierror, ConnectionError, ValueError, wikipedia.WikipediaException) as e:
-                print('EXCEPTION!', e)
-                page_name = wikipedia.random()
-                continue
+                except wikipedia.DisambiguationError:
+                    continue
+            break
+        except (wikipedia.PageError, KeyboardInterrupt, gaierror, ConnectionError, ValueError, wikipedia.WikipediaException) as e:
+            print('EXCEPTION!', e)
+            page_name = wikipedia.random()
+            continue
 
-        print(page_name)
-        text = page.summary
-        text = ''.join(c for c in text if c.lower() in 'qwertyuiopasdfghjklzxcvbnm ')
+    print(page_name)
+    text = page.summary
+    text = ''.join(c for c in text if c.lower() in 'qwertyuiopasdfghjklzxcvbnm ')
 
-        tokens = [stemmer.stem(t.lower()) for t in text.split() if len(t) >= 3 and t not in stops]
-        new_text = ' '.join(tokens)
-        text_list.append(new_text)
+    tokens = [stemmer.stem(t.lower()) for t in text.split() if len(t) >= 3 and t not in stops]
+    new_text = ' '.join(tokens)
 
-        print(i, '/', n, '\n')
+    return new_text
 
-    return text_list
+def save_to_file(filename, n):
+    stemmer = PorterStemmer()
+    stops = stopwords.words('english')
+
+    for i in range(n):
+        text = create(stemmer, stops)
+
+        with open(filename, 'a') as f:
+            f.write('other\t')
+            f.write(text)
+            f.write('\n')
+
+        print(i + 1, '/', n, '\n')
 
 if __name__ == '__main__':
-    if len(argv) != 4:
-        print('Usage: %s <count> <dataset> <new_dataset>' % argv[0])
+    if len(argv) != 3:
+        print('Usage: %s <count> <filename>' % argv[0])
         exit(0)
 
     count = int(argv[1])
-    dataset_file = argv[2]
-    new_dataset_file = argv[3]
+    new_dataset_file = argv[2]
 
-    texts = create(count)
-    old = []
-
-    with open(dataset_file, 'r') as f:
-        old = [l.strip() for l in f.readlines() if len(l.strip()) > 1]
-
-    with open(new_dataset_file, 'w') as f:
-        for l in old:
-            f.write(l)
-            f.write('\n')
-
-        for l in texts:
-            f.write('other\t')
-            f.write(l)
-            f.write('\n')
+    save_to_file(new_dataset_file, count)
