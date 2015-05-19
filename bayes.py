@@ -8,7 +8,7 @@ from datetime import datetime
 
 def read_dataset(dataset_file):
     with open(dataset_file) as f:
-        dataset = [d.split('\t') for d in f.read().splitlines()]
+        dataset = [d.split('\t') for d in f.read().splitlines() if len(d.split('\t')) == 2]
     return dataset
 
 
