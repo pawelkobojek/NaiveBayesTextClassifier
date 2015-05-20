@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog, QFileDialog, QMe
 from ui_classifier_load import Ui_LoadDatabaseWindow
 from ui_classifier_main import Ui_MainWindow
 from bayes import read_from_file, nb_classify_all, get_data_from_db, read_dataset, compute_error
+from nltk import PorterStemmer
 
 
 def center(window):
@@ -87,6 +88,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def classify_single_clicked(self):
         text = self.plainTextEdit_classifySingle.toPlainText()
+        stemmer = PorterStemmer()
+        text = stemmer.stem(text.lower())
+        print(text)
         pc, pw, vc = get_data_from_db(self.database)
         d = nb_classify_all(text, pc, pw, vc)
         d = [(k, d[k]) for k in sorted(d, key=d.get, reverse=True)]
