@@ -155,6 +155,7 @@ def compute_error(dataset, prob_of_classes, probs_of_word_given_classes, vocabul
             acc_err[row[0]] += 1
 
     for c in prob_of_classes.keys():
+        results[c]['count'] = acc_all[c]
         results[c]['accuracy'] = 100 * (1 - acc_err[c] / acc_all[c])
         results[c]['no_errors'] = acc_err[c]
         results[c]['p_errors'] = 100 * (acc_err[c] / error)

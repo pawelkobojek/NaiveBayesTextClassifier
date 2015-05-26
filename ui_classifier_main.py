@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'classifier_main.ui'
 #
-# Created: Tue Apr 28 16:15:52 2015
+# Created: Tue May 26 20:22:06 2015
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -106,7 +106,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.addWidget(self.pushButton_loadDataset, 0, 1, 1, 1)
         self.tableWidget_calculateSet = QtWidgets.QTableWidget(self.tab)
         self.tableWidget_calculateSet.setObjectName("tableWidget_calculateSet")
-        self.tableWidget_calculateSet.setColumnCount(4)
+        self.tableWidget_calculateSet.setColumnCount(5)
         self.tableWidget_calculateSet.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_calculateSet.setHorizontalHeaderItem(0, item)
@@ -116,8 +116,10 @@ class Ui_MainWindow(object):
         self.tableWidget_calculateSet.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget_calculateSet.setHorizontalHeaderItem(3, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.tableWidget_calculateSet.setHorizontalHeaderItem(4, item)
         self.tableWidget_calculateSet.horizontalHeader().setCascadingSectionResizes(True)
-        self.tableWidget_calculateSet.horizontalHeader().setDefaultSectionSize(160)
+        self.tableWidget_calculateSet.horizontalHeader().setDefaultSectionSize(150)
         self.tableWidget_calculateSet.horizontalHeader().setMinimumSectionSize(80)
         self.tableWidget_calculateSet.horizontalHeader().setStretchLastSection(True)
         self.tableWidget_calculateSet.verticalHeader().setVisible(False)
@@ -241,10 +243,12 @@ class Ui_MainWindow(object):
         item = self.tableWidget_calculateSet.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Class"))
         item = self.tableWidget_calculateSet.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Accuracy"))
+        item.setText(_translate("MainWindow", "Items count"))
         item = self.tableWidget_calculateSet.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "Number of errors"))
+        item.setText(_translate("MainWindow", "Accuracy"))
         item = self.tableWidget_calculateSet.horizontalHeaderItem(3)
+        item.setText(_translate("MainWindow", "Number of errors"))
+        item = self.tableWidget_calculateSet.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "% of errors"))
         self.label_4.setText(_translate("MainWindow", "Total Accuracy:"))
         self.label_totalAccuracy.setText(_translate("MainWindow", "Unknown"))

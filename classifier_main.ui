@@ -213,7 +213,7 @@
            <bool>true</bool>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>160</number>
+           <number>150</number>
           </attribute>
           <attribute name="horizontalHeaderMinimumSectionSize">
            <number>80</number>
@@ -227,6 +227,11 @@
           <column>
            <property name="text">
             <string>Class</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Items count</string>
            </property>
           </column>
           <column>

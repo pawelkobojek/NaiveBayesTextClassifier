@@ -130,9 +130,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tableWidget_calculateSet.setRowCount(len(results))
         for i, c in enumerate(results):
             self.tableWidget_calculateSet.setItem(i, 0, QTableWidgetItem(c))
-            self.tableWidget_calculateSet.setItem(i, 1, QTableWidgetItem('%.2f%%' % results[c]['accuracy']))
-            self.tableWidget_calculateSet.setItem(i, 2, QTableWidgetItem(str(results[c]['no_errors'])))
-            self.tableWidget_calculateSet.setItem(i, 3, QTableWidgetItem('%.2f%%' % results[c]['p_errors']))
+            self.tableWidget_calculateSet.setItem(i, 1, QTableWidgetItem(str(results[c]['count'])))
+            self.tableWidget_calculateSet.setItem(i, 2, QTableWidgetItem('%.2f%%' % results[c]['accuracy']))
+            self.tableWidget_calculateSet.setItem(i, 3, QTableWidgetItem(str(results[c]['no_errors'])))
+            self.tableWidget_calculateSet.setItem(i, 4, QTableWidgetItem('%.2f%%' % results[c]['p_errors']))
 
         self.set_dataset_calculation_mode(False)
 
